@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "4konserwy", "label": "4konserwy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "neuropa", "label": "neuropa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "nawrocki", "label": "nawrocki", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "trzaskowski", "label": "trzaskowski", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazlewactwa", "label": "bekazlewactwa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "heheszki", "label": "heheszki", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "humorobrazkowy", "label": "humorobrazkowy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "polska", "label": "polska", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazpisu", "label": "bekazpisu", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazpo", "label": "bekazpo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "mecz", "label": "mecz", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "reprezentacja", "label": "reprezentacja", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazprawakow", "label": "bekazprawakow", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "kanalzero", "label": "kanalzero", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "stanowski", "label": "stanowski", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pilkanozna", "label": "pilkanozna", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazpodludzi", "label": "bekazpodludzi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pis", "label": "pis", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "po", "label": "po", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "afera", "label": "afera", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "csiwykop", "label": "csiwykop", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazlibka", "label": "bekazlibka", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "konfederacja", "label": "konfederacja", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "blackpill", "label": "blackpill", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "przegryw", "label": "przegryw", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "tusk", "label": "tusk", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "debata", "label": "debata", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "imigranci", "label": "imigranci", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jablonowski", "label": "jablonowski", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jaszczur", "label": "jaszczur", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "rodacykamraci", "label": "rodacykamraci", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "p0lka", "label": "p0lka", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "giertychdebil", "label": "giertychdebil", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "sport", "label": "sport", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "koniecmistrzostw", "label": "koniecmistrzostw", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "prezydent", "label": "prezydent", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "takaprawda", "label": "takaprawda", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bazarek", "label": "bazarek", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "rosja", "label": "rosja", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "ukraina", "label": "ukraina", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "prawo", "label": "prawo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "wojna", "label": "wojna", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "lewandowski", "label": "lewandowski", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "kosmos", "label": "kosmos", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "spacex", "label": "spacex", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "braun", "label": "braun", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bekazkonfederacji", "label": "bekazkonfederacji", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "nieruchomosci", "label": "nieruchomosci", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "antykapitalizm", "label": "antykapitalizm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "tvrepublika", "label": "tvrepublika", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "niemcy", "label": "niemcy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "silnirazem", "label": "silnirazem", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "4konserwy", "title": "43 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 43}, {"from": "nawrocki", "title": "35 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 35}, {"from": "bekazlewactwa", "title": "27 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 27}, {"from": "4konserwy", "title": "25 wsp\u00f3lnych post\u00f3w", "to": "bekazlewactwa", "value": 25}, {"from": "bekazlewactwa", "title": "25 wsp\u00f3lnych post\u00f3w", "to": "heheszki", "value": 25}, {"from": "heheszki", "title": "25 wsp\u00f3lnych post\u00f3w", "to": "humorobrazkowy", "value": 25}, {"from": "bekazlewactwa", "title": "24 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 24}, {"from": "bekazlewactwa", "title": "24 wsp\u00f3lnych post\u00f3w", "to": "bekazpisu", "value": 24}, {"from": "bekazlewactwa", "title": "23 wsp\u00f3lnych post\u00f3w", "to": "bekazpo", "value": 23}, {"from": "bekazpisu", "title": "22 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 22}, {"from": "bekazpisu", "title": "21 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 21}, {"from": "mecz", "title": "20 wsp\u00f3lnych post\u00f3w", "to": "reprezentacja", "value": 20}, {"from": "bekazpisu", "title": "20 wsp\u00f3lnych post\u00f3w", "to": "heheszki", "value": 20}, {"from": "bekazlewactwa", "title": "19 wsp\u00f3lnych post\u00f3w", "to": "bekazprawakow", "value": 19}, {"from": "kanalzero", "title": "18 wsp\u00f3lnych post\u00f3w", "to": "stanowski", "value": 18}, {"from": "mecz", "title": "18 wsp\u00f3lnych post\u00f3w", "to": "pilkanozna", "value": 18}, {"from": "pilkanozna", "title": "17 wsp\u00f3lnych post\u00f3w", "to": "reprezentacja", "value": 17}, {"from": "bekazlewactwa", "title": "16 wsp\u00f3lnych post\u00f3w", "to": "bekazpodludzi", "value": 16}, {"from": "bekazpisu", "title": "15 wsp\u00f3lnych post\u00f3w", "to": "bekazprawakow", "value": 15}, {"from": "nawrocki", "title": "15 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 15}, {"from": "bekazprawakow", "title": "14 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 14}, {"from": "heheszki", "title": "14 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 14}, {"from": "4konserwy", "title": "13 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 13}, {"from": "heheszki", "title": "13 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 13}, {"from": "bekazlewactwa", "title": "13 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 13}, {"from": "heheszki", "title": "13 wsp\u00f3lnych post\u00f3w", "to": "pilkanozna", "value": 13}, {"from": "bekazpisu", "title": "12 wsp\u00f3lnych post\u00f3w", "to": "bekazpodludzi", "value": 12}, {"from": "pis", "title": "12 wsp\u00f3lnych post\u00f3w", "to": "po", "value": 12}, {"from": "polska", "title": "12 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 12}, {"from": "bekazpodludzi", "title": "11 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 11}, {"from": "neuropa", "title": "11 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 11}, {"from": "nawrocki", "title": "11 wsp\u00f3lnych post\u00f3w", "to": "pis", "value": 11}, {"from": "heheszki", "title": "11 wsp\u00f3lnych post\u00f3w", "to": "mecz", "value": 11}, {"from": "afera", "title": "11 wsp\u00f3lnych post\u00f3w", "to": "csiwykop", "value": 11}, {"from": "4konserwy", "title": "10 wsp\u00f3lnych post\u00f3w", "to": "bekazpodludzi", "value": 10}, {"from": "afera", "title": "10 wsp\u00f3lnych post\u00f3w", "to": "bekazlewactwa", "value": 10}, {"from": "bekazpisu", "title": "10 wsp\u00f3lnych post\u00f3w", "to": "kanalzero", "value": 10}, {"from": "heheszki", "title": "10 wsp\u00f3lnych post\u00f3w", "to": "reprezentacja", "value": 10}, {"from": "4konserwy", "title": "9 wsp\u00f3lnych post\u00f3w", "to": "bekazprawakow", "value": 9}, {"from": "bekazlewactwa", "title": "9 wsp\u00f3lnych post\u00f3w", "to": "bekazlibka", "value": 9}, {"from": "bekazlewactwa", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "konfederacja", "value": 8}, {"from": "bekazpodludzi", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "bekazprawakow", "value": 8}, {"from": "bekazlewactwa", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "nawrocki", "value": 8}, {"from": "blackpill", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "przegryw", "value": 8}, {"from": "polska", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "tusk", "value": 8}, {"from": "debata", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "kanalzero", "value": 8}, {"from": "bekazlewactwa", "title": "8 wsp\u00f3lnych post\u00f3w", "to": "tusk", "value": 8}, {"from": "imigranci", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 7}, {"from": "bekazprawakow", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 7}, {"from": "4konserwy", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "konfederacja", "value": 7}, {"from": "bekazpo", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 7}, {"from": "jablonowski", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "jaszczur", "value": 7}, {"from": "jablonowski", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "rodacykamraci", "value": 7}, {"from": "jaszczur", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "rodacykamraci", "value": 7}, {"from": "blackpill", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "p0lka", "value": 7}, {"from": "p0lka", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "przegryw", "value": 7}, {"from": "bekazlewactwa", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "giertychdebil", "value": 7}, {"from": "bekazpo", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "giertychdebil", "value": 7}, {"from": "pilkanozna", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "sport", "value": 7}, {"from": "afera", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "bekazpo", "value": 7}, {"from": "trzaskowski", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "tusk", "value": 7}, {"from": "heheszki", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "koniecmistrzostw", "value": 7}, {"from": "koniecmistrzostw", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "mecz", "value": 7}, {"from": "koniecmistrzostw", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "pilkanozna", "value": 7}, {"from": "koniecmistrzostw", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "reprezentacja", "value": 7}, {"from": "prezydent", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 7}, {"from": "heheszki", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "trzaskowski", "value": 7}, {"from": "heheszki", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "takaprawda", "value": 7}, {"from": "bekazlewactwa", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "takaprawda", "value": 7}, {"from": "bazarek", "title": "7 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 7}, {"from": "imigranci", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 6}, {"from": "4konserwy", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "bekazpisu", "value": 6}, {"from": "rosja", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "ukraina", "value": 6}, {"from": "bekazpodludzi", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 6}, {"from": "polska", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "prezydent", "value": 6}, {"from": "polska", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "prawo", "value": 6}, {"from": "polska", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "takaprawda", "value": 6}, {"from": "bekazpodludzi", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "kanalzero", "value": 6}, {"from": "nawrocki", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "tusk", "value": 6}, {"from": "afera", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "giertychdebil", "value": 6}, {"from": "ukraina", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "wojna", "value": 6}, {"from": "4konserwy", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "heheszki", "value": 6}, {"from": "lewandowski", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "reprezentacja", "value": 6}, {"from": "nawrocki", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "prezydent", "value": 6}, {"from": "pis", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 6}, {"from": "bekazlewactwa", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "kanalzero", "value": 6}, {"from": "kanalzero", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 6}, {"from": "bekazpisu", "title": "6 wsp\u00f3lnych post\u00f3w", "to": "humorobrazkowy", "value": 6}, {"from": "kosmos", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "spacex", "value": 5}, {"from": "4konserwy", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "imigranci", "value": 5}, {"from": "braun", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 5}, {"from": "bekazkonfederacji", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "bekazpisu", "value": 5}, {"from": "bekazpisu", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "debata", "value": 5}, {"from": "nieruchomosci", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 5}, {"from": "antykapitalizm", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "neuropa", "value": 5}, {"from": "bekazpodludzi", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "heheszki", "value": 5}, {"from": "bekazpisu", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "imigranci", "value": 5}, {"from": "bekazpisu", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "tvrepublika", "value": 5}, {"from": "niemcy", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "polska", "value": 5}, {"from": "heheszki", "title": "5 wsp\u00f3lnych post\u00f3w", "to": "silnirazem", "value": 5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
